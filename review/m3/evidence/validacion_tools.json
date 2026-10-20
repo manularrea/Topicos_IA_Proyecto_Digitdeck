@@ -1,0 +1,15 @@
+{
+  "base_commit": "1ead5646a01286e9e043557aba83afec5e9c639a",
+  "python": "3.13.5",
+  "numpy": "2.3.5",
+  "pytest": "9.0.2",
+  "test_count": 48,
+  "test_command": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 OPENBLAS_NUM_THREADS=1 python -m pytest review/m3/tests/test_revision_tools.py -q",
+  "result": "................................................                         [100%]\n48 passed in 0.08s",
+  "limits": "Callbacks controlados y funciones transcritas. No notebook completo, GPU, modelos ni APIs; validar lote real antes de incorporar.",
+  "git_blobs": {
+    "Entregables/M3/revision_tools.py": "0f03a0413ba1eb7e633f27f748d6f1f7fdb4d229",
+    "review/m3/sources/funciones_seleccionadas.py": "2d784a4aab6a66766083a088e33547ae036e94c1",
+    "review/m3/tests/test_revision_tools.py": "2012075a9dc6192297bc458ac5d46fcf478baa98"
+  }
+}
