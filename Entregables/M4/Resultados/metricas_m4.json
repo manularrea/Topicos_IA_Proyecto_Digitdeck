@@ -1,0 +1,204 @@
+{
+  "vlm": "Qwen/Qwen2-VL-2B-Instruct",
+  "min_pixels": 200704,
+  "max_pixels": 802816,
+  "valvula": "Responde SOLO con lo que se ve en la imagen. Si un dato no se aprecia en la imagen, escribe null en ese campo. Si en la imagen no hay un producto que se pueda identificar, responde exactamente: {\"es_producto\": false}",
+  "instruccion": "Un comprador te muestra esta foto para saber si una tienda en línea tiene ese producto. Devuelve SOLO un JSON, en español, con estos campos: {\"es_producto\": true o false, \"tipo_producto\": \"qué es, en pocas palabras\", \"marca\": \"marca o null\", \"modelo\": \"modelo o null\", \"color\": \"color o null\", \"texto_visible\": \"texto legible en el producto o null\"}",
+  "casos_con_imagen": [
+    "img_01",
+    "img_02",
+    "img_03",
+    "img_04",
+    "img_05",
+    "img_06",
+    "img_07",
+    "img_08",
+    "img_09",
+    "img_10",
+    "img_11",
+    "img_12"
+  ],
+  "fuera": [],
+  "pendientes_etiquetado": [],
+  "iguales_a_m3_sin_imagen": 49,
+  "regla_oficial": "D3 de M3 sin cambios; complementos: regla del CSV y primera cita",
+  "cobertura": {
+    "M3 pregunta sola": "12/12",
+    "M3 techo": "10/10",
+    "M4": "12/12",
+    "M4.1": "12/12"
+  },
+  "estados": {
+    "M3 pregunta sola": {
+      "sistema_D": 12
+    },
+    "M3 techo": {
+      "sistema_D": 10
+    },
+    "M4": {
+      "respuesta_generada": 9,
+      "sin_resultados": 3
+    },
+    "M4.1": {
+      "respuesta_generada": 7,
+      "sin_resultados": 3,
+      "abstencion_dominio": 1,
+      "sin_producto": 1
+    }
+  },
+  "delta": [
+    {
+      "grupo": "Sin imagen (49 de M3): aciertos de respuesta",
+      "M3": "17/49",
+      "M4": "17/49",
+      "M4.1 (post hoc)": "igual a M4 (sin foto es sistema_D)",
+      "techo": "",
+      "delta M4 vs M3": "0.000 [0.000, 0.000]",
+      "lectura": "¿empeoró lo viejo?"
+    },
+    {
+      "grupo": "Sin imagen: nDCG@10 existencia (ESCI)",
+      "M3": "0.453",
+      "M4": "0.453",
+      "M4.1 (post hoc)": "igual a M4 (sin foto es sistema_D)",
+      "techo": "",
+      "delta M4 vs M3": "0.000 [-0.000, 0.000]",
+      "lectura": "¿empeoró lo viejo?"
+    },
+    {
+      "grupo": "Sin imagen: afirmaciones falsas",
+      "M3": 6,
+      "M4": 6,
+      "M4.1 (post hoc)": "igual a M4 (sin foto es sistema_D)",
+      "techo": "",
+      "delta M4 vs M3": "",
+      "lectura": "¿empeoró lo viejo?"
+    },
+    {
+      "grupo": "Sin imagen: auditoría de citas (desconocidas / fichas sin cita / abstención fuera de contrato)",
+      "M3": "0 / 2 / 0",
+      "M4": "0 / 2 / 0",
+      "M4.1 (post hoc)": "igual a M4 (sin foto es sistema_D)",
+      "techo": "",
+      "delta M4 vs M3": "",
+      "lectura": "¿el texto cita lo que recuperó?"
+    },
+    {
+      "grupo": "Con imagen (12 casos): aciertos, D3 (oficial)",
+      "M3": "3/12 (pregunta sola)",
+      "M4": "4/12",
+      "M4.1 (post hoc)": "7/12",
+      "techo": "8/10",
+      "delta M4 vs M3": "+1",
+      "lectura": "¿se responden ahora? ¿cuánto falta para el techo?"
+    },
+    {
+      "grupo": "Con imagen: aciertos, regla del CSV (complemento)",
+      "M3": "3/12 (pregunta sola)",
+      "M4": "5/12",
+      "M4.1 (post hoc)": "9/12",
+      "techo": "10/10",
+      "delta M4 vs M3": "+2",
+      "lectura": "¿se responden ahora? ¿cuánto falta para el techo?"
+    },
+    {
+      "grupo": "Con imagen: aciertos, primera cita es el producto (complemento)",
+      "M3": "3/12 (pregunta sola)",
+      "M4": "5/12",
+      "M4.1 (post hoc)": "8/12",
+      "techo": "10/10",
+      "delta M4 vs M3": "+2",
+      "lectura": "¿se responden ahora? ¿cuánto falta para el techo?"
+    },
+    {
+      "grupo": "Con imagen, deberían responderse (8 casos): nota media D3",
+      "M3": "0.12 (8/8 con nota), pregunta sola",
+      "M4": "0.38 (8/8 con nota)",
+      "M4.1 (post hoc)": "0.38 (8/8 con nota)",
+      "techo": "0.75 (8/8 con nota)",
+      "delta M4 vs M3": "0.25",
+      "lectura": "¿se responden ahora? ¿cuánto falta para el techo?"
+    },
+    {
+      "grupo": "Con imagen, adversariales (4 casos)",
+      "M3": "2/4 (pregunta sola)",
+      "M4": "1/4",
+      "M4.1 (post hoc)": "4/4",
+      "techo": "",
+      "delta M4 vs M3": "",
+      "lectura": "¿se negó cuando debía?"
+    },
+    {
+      "grupo": "Con imagen: afirmaciones falsas",
+      "M3": 8,
+      "M4": 5,
+      "M4.1 (post hoc)": 2,
+      "techo": 0,
+      "delta M4 vs M3": "",
+      "lectura": "¿dijo que sí sin tenerlo?"
+    },
+    {
+      "grupo": "Con imagen: auditoría de citas (desconocidas / fichas sin cita / abstención fuera de contrato)",
+      "M3": "0 / 0 / 0",
+      "M4": "0 / 0 / 0",
+      "M4.1 (post hoc)": "0 / 0 / 0",
+      "techo": "0 / 0 / 0",
+      "delta M4 vs M3": "",
+      "lectura": "¿el texto cita lo que recuperó?"
+    },
+    {
+      "grupo": "Con imagen: salidas válidas (cobertura)",
+      "M3": "12/12",
+      "M4": "12/12",
+      "M4.1 (post hoc)": "12/12",
+      "techo": "10/10",
+      "delta M4 vs M3": "",
+      "lectura": "¿hubo errores fuera de la nota?"
+    },
+    {
+      "grupo": "ver(): campos recuperados (media)",
+      "M3": "no ve",
+      "M4": "0.72",
+      "M4.1 (post hoc)": "0.71",
+      "techo": "",
+      "delta M4 vs M3": "",
+      "lectura": "¿leyó bien la foto?"
+    },
+    {
+      "grupo": "Latencia media sin imagen (s)",
+      "M3": "2.08",
+      "M4": "2.20",
+      "M4.1 (post hoc)": "igual a M4 (sin foto es sistema_D)",
+      "techo": "",
+      "delta M4 vs M3": "",
+      "lectura": "¿cuánto cuesta el enchufe?"
+    },
+    {
+      "grupo": "Latencia media con imagen (s)",
+      "M3": "2.33 (pregunta sola)",
+      "M4": "3.77 (ver 1.72)",
+      "M4.1 (post hoc)": "4.59 (ver 3.05)",
+      "techo": "",
+      "delta M4 vs M3": "1.44",
+      "lectura": "¿cuánto cuesta ver?"
+    },
+    {
+      "grupo": "Latencia p95 con imagen (s)",
+      "M3": "5.15",
+      "M4": "5.95",
+      "M4.1 (post hoc)": "6.48",
+      "techo": "",
+      "delta M4 vs M3": "",
+      "lectura": "¿cuánto cuesta ver?"
+    },
+    {
+      "grupo": "Peor caso con imagen",
+      "M3": "",
+      "M4": "img_10 (nota 0, campos 0.00)",
+      "M4.1 (post hoc)": "img_05 (nota 0, campos 0.50)",
+      "techo": "",
+      "delta M4 vs M3": "",
+      "lectura": "¿dónde falla y por qué? (§8.3)"
+    }
+  ]
+}

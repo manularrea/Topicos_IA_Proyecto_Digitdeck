@@ -1,0 +1,18 @@
+grupo,M3,M4,M4.1 (post hoc),techo,delta M4 vs M3,lectura
+Sin imagen (49 de M3): aciertos de respuesta,17/49,17/49,igual a M4 (sin foto es sistema_D),,"0.000 [0.000, 0.000]",¿empeoró lo viejo?
+Sin imagen: nDCG@10 existencia (ESCI),0.453,0.453,igual a M4 (sin foto es sistema_D),,"0.000 [-0.000, 0.000]",¿empeoró lo viejo?
+Sin imagen: afirmaciones falsas,6,6,igual a M4 (sin foto es sistema_D),,,¿empeoró lo viejo?
+Sin imagen: auditoría de citas (desconocidas / fichas sin cita / abstención fuera de contrato),0 / 2 / 0,0 / 2 / 0,igual a M4 (sin foto es sistema_D),,,¿el texto cita lo que recuperó?
+"Con imagen (12 casos): aciertos, D3 (oficial)",3/12 (pregunta sola),4/12,7/12,8/10,+1,¿se responden ahora? ¿cuánto falta para el techo?
+"Con imagen: aciertos, regla del CSV (complemento)",3/12 (pregunta sola),5/12,9/12,10/10,+2,¿se responden ahora? ¿cuánto falta para el techo?
+"Con imagen: aciertos, primera cita es el producto (complemento)",3/12 (pregunta sola),5/12,8/12,10/10,+2,¿se responden ahora? ¿cuánto falta para el techo?
+"Con imagen, deberían responderse (8 casos): nota media D3","0.12 (8/8 con nota), pregunta sola",0.38 (8/8 con nota),0.38 (8/8 con nota),0.75 (8/8 con nota),0.25,¿se responden ahora? ¿cuánto falta para el techo?
+"Con imagen, adversariales (4 casos)",2/4 (pregunta sola),1/4,4/4,,,¿se negó cuando debía?
+Con imagen: afirmaciones falsas,8,5,2,0,,¿dijo que sí sin tenerlo?
+Con imagen: auditoría de citas (desconocidas / fichas sin cita / abstención fuera de contrato),0 / 0 / 0,0 / 0 / 0,0 / 0 / 0,0 / 0 / 0,,¿el texto cita lo que recuperó?
+Con imagen: salidas válidas (cobertura),12/12,12/12,12/12,10/10,,¿hubo errores fuera de la nota?
+ver(): campos recuperados (media),no ve,0.72,0.71,,,¿leyó bien la foto?
+Latencia media sin imagen (s),2.08,2.20,igual a M4 (sin foto es sistema_D),,,¿cuánto cuesta el enchufe?
+Latencia media con imagen (s),2.33 (pregunta sola),3.77 (ver 1.72),4.59 (ver 3.05),,1.44,¿cuánto cuesta ver?
+Latencia p95 con imagen (s),5.15,5.95,6.48,,,¿cuánto cuesta ver?
+Peor caso con imagen,,"img_10 (nota 0, campos 0.00)","img_05 (nota 0, campos 0.50)",,,¿dónde falla y por qué? (§8.3)
