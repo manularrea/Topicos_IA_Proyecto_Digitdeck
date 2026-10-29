@@ -1,0 +1,24 @@
+{
+  "fecha": "2026-10-29",
+  "sha_base": "6afab21",
+  "plataforma": "macOS-26.6.2-arm64-arm-64bit",
+  "python_pruebas": "3.12.12",
+  "python_celda9": "3.12.12 (venv local, pandas 3.1.0, pyarrow 26.0.0)",
+  "datos_celda9": "amazon-science/esci-data main, shopping_queries_dataset_{examples,products}.parquet (51.286.808 y 1.108.857.465 bytes)",
+  "unittest_guardia": "OK",
+  "verificar_scorecard": {
+    "todas_coinciden": true,
+    "scorecard_obsoleto_difiere": true
+  },
+  "celda9_original": "CELDA 9: AssertionError: El split de test no es el de M1.",
+  "celda9_con_C1": "CELDA 9: OK",
+  "sin_modelos": "No se cargaron VLM, generador, reranker, Chroma ni GPU; no se usaron credenciales ni APIs de pago.",
+  "sha256_16": {
+    "review/m4/propuesta/guardia_lectura.py": "0792e7e5ae0ae13f",
+    "review/m4/tests/test_guardia_lectura.py": "faf4ce997f874367",
+    "review/m4/tests/verificar_scorecard.py": "c22fc6f860891752",
+    "review/m4/tests/run_cell9.py": "aad50130d0bd0d9b",
+    "Entregables/M4/pipeline/ENTREGABLE.ipynb": "cd7f627821b87e04"
+  },
+  "comando_celda9": "python review/m4/tests/run_cell9.py Entregables/M4/pipeline/ENTREGABLE.ipynb <dir_parquets_esci>"
+}
