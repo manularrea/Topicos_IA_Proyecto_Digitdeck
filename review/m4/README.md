@@ -38,7 +38,7 @@ Con D3, M4 acierta 1 de 6 positivos, igual que M3 con la pregunta sola; el +1 gl
 
 ## Evidencia y límites
 
-Nivel alcanzado: **recalculado desde artefactos** (scorecard, delta, latencias media/p95, regresión 49/49, estados, imágenes, EXIF) y **componente real** solo para la celda 9 con datos ESCI públicos. No se cargaron VLM, generador, reranker ni Chroma; no se usó GPU, credenciales ni APIs de pago. No se repitió la inferencia ni se juzgó de nuevo el etiquetado. El video de Teams no se verificó por este canal.
+Nivel alcanzado: **recalculado desde artefactos** (scorecard, delta, latencias media/p95, regresión 49/49, estados, imágenes, EXIF) y **componentes reales** en dos puntos. El primero es la celda 9, con los datos ESCI públicos. El segundo es `ver()`/`ver_dos_pasos()` sobre las 12 fotos con Qwen2-VL-2B en Apple MPS (bf16 y fp16); se ejecutaron las celdas 40 y 43 sin cambios, salvo el dispositivo. La lectura de marca y modelo coincide en 12/12 con sus trazas (bf16), y img_10 e img_05 se reproducen idénticas. En img_11 el VLM vuelve a tratar la foto borrosa como producto y escribe un texto "AirPods" que no se lee; en este hardware el JSON sale incompleto y el caso termina en `error_formato`. Las diferencias restantes son sinónimos ("smartphone"/"celular"), esperables entre GPUs. No se re-ejecutaron el enrutador, el generador, el reranker ni Chroma. No se repitió la inferencia ni se juzgó de nuevo el etiquetado. El video de Teams no se verificó por este canal.
 
 ## Publicación
 
