@@ -42,9 +42,13 @@ def main():
     ok = all(a == b for _, a, b in chk)
     for n, a, b in chk:
         print(f"{'OK ' if a == b else 'DIF'} {n}: recalculado={a} delta={b}")
-    old = list(csv.DictReader(open(M4 / "Resultados/scorecard_m4.csv", encoding="utf-8")))
-    difs = [r["id"] for r, o in zip(sc, old) if r["nota_m4"] != o["nota_m4"] or r["nota_m4.1"] != o["nota_m4.1"]]
-    print("Resultados/scorecard_m4.csv difiere del oficial en nota_m4/nota_m4.1 para:", difs)
+    previo = next((M4 / "Resultados" / n for n in ("scorecard_m4.csv", "scorecard_m4_corrida_previa.csv")
+                   if (M4 / "Resultados" / n).exists()), None)
+    difs = []
+    if previo:
+        old = list(csv.DictReader(open(previo, encoding="utf-8")))
+        difs = [r["id"] for r, o in zip(sc, old) if r["nota_m4"] != o["nota_m4"] or r["nota_m4.1"] != o["nota_m4.1"]]
+        print(f"{previo.relative_to(M4)} difiere del oficial en nota_m4/nota_m4.1 para:", difs)
     print(json.dumps({"todas_coinciden": ok, "scorecard_obsoleto_difiere": bool(difs)}))
     return 0 if ok else 1
 

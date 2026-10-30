@@ -53,8 +53,8 @@ class PideConfirmacion(Exception):
     """No es error ni abstención por inexistencia: falta un dato del comprador."""
 
 
-def nota_contrafactual(criterio_efectivo):
-    """Nota si el sistema no afirma (pide confirmación) con los criterios del eval set M4."""
+def valor_contrafactual(criterio_efectivo):
+    """Valor D3 del caso si el sistema no afirma (pide confirmación) con los criterios del eval set M4."""
     return {"acierto_respuesta": 0.0, "no_afirma": 1.0, "valvula": 1.0}[criterio_efectivo]
 
 
@@ -68,20 +68,20 @@ def reproyectar(scorecard_csv, salidas_json):
     with open(scorecard_csv, encoding="utf-8") as fh:
         filas = list(csv.DictReader(fh))
     res = {}
-    for sistema, suf_nota, suf_falsa in (("M4", "m4", "m4"), ("M4.1", "m4.1", "m4_1")):
-        notas, falsas, adv, activada = [], 0, 0, []
+    for sistema, suf_col, suf_falsa in (("M4", "m4", "m4"), ("M4.1", "m4.1", "m4_1")):
+        valores, falsas, adv, activada = [], 0, 0, []
         for f in filas:
             s = sal[sistema][f["id"]]
-            nota = float(f[f"nota_{suf_nota}"])
+            valor = float(f[f"nota_{suf_col}"])
             falsa = f[f"afirmacion_falsa_{suf_falsa}"] == "True"
             if s.get("estado") in ("respuesta_generada", "sin_resultados") and requiere_confirmacion(s.get("ver_json")):
                 activada.append(f["id"])
-                nota, falsa = nota_contrafactual(f["criterio_efectivo_m4"]), False
-            notas.append(nota)
+                valor, falsa = valor_contrafactual(f["criterio_efectivo_m4"]), False
+            valores.append(valor)
             falsas += falsa
-            adv += nota if f["tipo"] == "adversarial" else 0
+            adv += valor if f["tipo"] == "adversarial" else 0
         n_adv = sum(f["tipo"] == "adversarial" for f in filas)
-        res[sistema] = {"guardia_activada": activada, "d3": f"{int(sum(notas))}/{len(notas)}",
+        res[sistema] = {"guardia_activada": activada, "d3": f"{int(sum(valores))}/{len(valores)}",
                         "adversariales": f"{int(adv)}/{n_adv}", "afirmaciones_falsas": falsas}
     return res
 

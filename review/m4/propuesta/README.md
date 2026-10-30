@@ -1,6 +1,6 @@
 # Propuestas docentes M4 — Digitdeck (opt-in, no fusionar sin validar)
 
-Referencia evaluada: `6afab21` (`main` del original, 25/10/2026 01:15 -05:00). No se modifican cifras, CSV ni salidas entregadas.
+Referencia evaluada: `6afab21` (`main` del original, 25/10/2026 01:15 -05:00). No se modifican cifras ni el contenido de CSV o salidas entregadas; el único movimiento de archivo es el renombrado de C3, sin cambiar su contenido.
 
 ## C1 — Hash del split de test portable (celda 9 del notebook, conteo desde 0)
 
@@ -46,11 +46,37 @@ Los consumidores (`nota_caso`, conteo de estados, cobertura) deben tratar `pide_
 
 **Límites:** se diseñó mirando estos 12 casos (post hoc, como M4.1); los positivos no mejoran (1/6); en preguntas genéricas ("¿Venden estufas como esta?") pide un dato que quizá el comprador no tiene. Validar con fotos nuevas antes de adoptarla.
 
+## C3 — Un solo `scorecard_m4.csv` (observación M4-04)
+
+**Qué cambia:** `Entregables/M4/Resultados/scorecard_m4.csv` (corrida anterior, 26 columnas, distinto en `nota_m4`/`nota_m4.1` de img_01 e img_07) pasa a llamarse `Resultados/scorecard_m4_corrida_previa.csv`. El contenido queda idéntico byte a byte. El oficial sigue siendo `Entregables/M4/scorecard_m4.csv`, que es el que escribe la celda 60 y el que reproduce `delta_m4.csv`. Ningún archivo del repositorio enlaza la ruta antigua (`git grep`). Si prefieren borrarlo, también sirve.
+
+## C4 — Intervalos para las filas con foto (`propuesta/ic_con_foto.py`, observaciones M4-05 y M4-06)
+
+Solo lectura de `scorecard_m4.csv`. Calcula Wilson 95 % por versión y un bootstrap pareado por caso (semilla fija, 10.000 réplicas) de la diferencia frente a «M3 pregunta sola». Con su scorecard:
+
+| | Aciertos D3 | IC 95 % |
+|---|---|---|
+| M3 pregunta sola | 3/12 | 0,09–0,53 |
+| M4 | 4/12 | 0,14–0,61 |
+| M4.1 (post hoc) | 7/12 | 0,32–0,81 |
+| M4 − M3 sola (pareado) | +0,08 | −0,17 a +0,33 |
+| M4.1 − M3 sola (pareado) | +0,33 | 0,00 a +0,67 |
+| Afirmaciones falsas M4 / M4.1 | 5/12 · 2/12 | 0,19–0,68 · 0,05–0,45 |
+
+Lectura: con 12 casos, la mejora de M4 sobre la pregunta sola es compatible con cero. Por eso conviene presentarla con su denominador y confirmarla con fotos nuevas.
+
+## C5 — Verificador del eval set (`tests/verificar_eval_set.py`, observación M4-06)
+
+Detecta imágenes idénticas en píxeles y revisa la columna `estado`. Con el eval set entregado: 12 casos y 11 imágenes distintas en píxeles; img_12 es idéntica a img_01 (declarada como copia) e img_11 es un desenfoque de img_03 (también declarado). Las 12 filas están en `estado = borrador`. Termina con código 1 hasta que `estado` diga `final` (o `aprobado`/`congelado`) y no haya duplicados, así que úsenlo como recordatorio al ampliar el set.
+
 ## Pruebas
 
 ```bash
-python -m unittest review/m4/tests/test_guardia_lectura.py -v   # 6 pruebas, solo stdlib
-python review/m4/tests/verificar_scorecard.py                   # reconstruye delta_m4.csv desde scorecard_m4.csv
+python -m unittest review/m4/tests/test_guardia_lectura.py review/m4/tests/test_ic_con_foto.py -v   # 9 pruebas, solo stdlib
+python review/m4/tests/verificar_scorecard.py      # reconstruye delta_m4.csv desde scorecard_m4.csv (11/11)
+python review/m4/propuesta/ic_con_foto.py          # C4
+python review/m4/tests/verificar_eval_set.py       # C5 (Pillow + numpy)
+python review/m4/tests/run_cell9.py Entregables/M4/pipeline/ENTREGABLE.ipynb <dir_parquets_esci>   # C1
 ```
 
 Entorno y salidas en `evidence/validacion_m4.json`.
