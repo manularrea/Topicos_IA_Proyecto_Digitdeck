@@ -1,0 +1,109 @@
+{
+  "fecha": "2026-10-29",
+  "sha_base": "6afab21",
+  "plataforma": "macOS-26.6.2-arm64-arm-64bit",
+  "python_pruebas": "3.12.12",
+  "python_celda9": "3.12.12 (venv local, pandas 3.1.0, pyarrow 26.0.0)",
+  "datos_celda9": "amazon-science/esci-data main, shopping_queries_dataset_{examples,products}.parquet (51.286.808 y 1.108.857.465 bytes)",
+  "verificar_scorecard": {
+    "todas_coinciden": true,
+    "scorecard_obsoleto_difiere": true
+  },
+  "celda9_original": "CELDA 9: AssertionError: El split de test no es el de M1.",
+  "celda9_con_C1": "CELDA 9: OK (re-ejecutada 29/10 20:5x; hash 4d31950e81340999c4cbda611b4256c9)",
+  "sin_modelos": "Estas pruebas no cargan VLM, generador, reranker ni Chroma; no usan credenciales ni APIs. La reproducción con modelos reales (Apple MPS) se documenta en review/m4/README.md del PR documental.",
+  "sha256_16": {
+    "review/m4/propuesta/guardia_lectura.py": "8c02fe9b956f692a",
+    "review/m4/propuesta/ic_con_foto.py": "ba7e6f868051d09e",
+    "review/m4/tests/test_guardia_lectura.py": "faf4ce997f874367",
+    "review/m4/tests/test_ic_con_foto.py": "b0f804a87fc0aab1",
+    "review/m4/tests/verificar_scorecard.py": "6af771246c48aae3",
+    "review/m4/tests/verificar_eval_set.py": "c6255b89cbee4417",
+    "review/m4/tests/run_cell9.py": "aad50130d0bd0d9b",
+    "Entregables/M4/pipeline/ENTREGABLE.ipynb": "cd7f627821b87e04"
+  },
+  "comando_celda9": "python review/m4/tests/run_cell9.py Entregables/M4/pipeline/ENTREGABLE.ipynb <dir_parquets_esci>",
+  "unittest_guardia_e_ic": "OK (9 pruebas: test_guardia_lectura 6, test_ic_con_foto 3)",
+  "ic_con_foto": {
+    "n": 12,
+    "d3": {
+      "M3 sola": {
+        "aciertos": "3/12",
+        "ic95": [
+          0.089,
+          0.532
+        ]
+      },
+      "M4": {
+        "aciertos": "4/12",
+        "ic95": [
+          0.138,
+          0.609
+        ]
+      },
+      "M4.1": {
+        "aciertos": "7/12",
+        "ic95": [
+          0.32,
+          0.807
+        ]
+      },
+      "Techo": {
+        "aciertos": "8/10",
+        "ic95": [
+          0.49,
+          0.943
+        ]
+      }
+    },
+    "dif_vs_m3_sola": {
+      "M4": {
+        "n_pares": 12,
+        "dif": 0.083,
+        "ic95": [
+          -0.167,
+          0.333
+        ]
+      },
+      "M4.1": {
+        "n_pares": 12,
+        "dif": 0.333,
+        "ic95": [
+          0.0,
+          0.667
+        ]
+      }
+    },
+    "afirmaciones_falsas": {
+      "M4": {
+        "casos": "5/12",
+        "ic95": [
+          0.193,
+          0.68
+        ]
+      },
+      "M4.1": {
+        "casos": "2/12",
+        "ic95": [
+          0.047,
+          0.448
+        ]
+      }
+    }
+  },
+  "verificar_eval_set": {
+    "casos": 12,
+    "imagenes_distintas_en_pixeles": 11,
+    "identicas": [
+      [
+        "img_01",
+        "img_12"
+      ]
+    ],
+    "estado": [
+      "borrador"
+    ],
+    "derivada_declarada": "img_11 = desenfoque de img_03 (INFORME_M4 tabla de procedencia)"
+  },
+  "renombrado": "Entregables/M4/Resultados/scorecard_m4.csv -> scorecard_m4_corrida_previa.csv (contenido idéntico byte a byte)"
+}
