@@ -1,6 +1,6 @@
 # Plan sugerido para Demo Day — Digitdeck
 
-Orientación docente, no formato oficial. Ustedes deciden qué adoptar y quién lo asume.
+Orientación docente, no formato oficial. Ustedes deciden qué adoptar y quién lo asume. Las observaciones M4-0x están en [`README.md`](README.md); las propuestas de código C1–C5, en CODE_PR.
 
 ## Punto de partida: lo que ya tienen conectado
 
@@ -12,17 +12,17 @@ El recorrido completo ya existe en una sola función: `sistema_multimodal(pregun
 
 En la revisión se re-ejecutó `ver()` y el generador con los modelos reales en otro hardware, y el comportamiento coincidió con sus trazas. Esa función es la base natural del despliegue de M5: al desplegar, basta con envolverla en una interfaz.
 
-## P0 — Que el recorrido completo arranque en el entorno de despliegue
+## P0 — Que el recorrido completo arranque en el entorno de despliegue (M4-01)
 
 - **Prioridad:** P0
 - **Qué podría ocurrir durante la demo:** en el entorno donde desplieguen, que normalmente es Linux, el arranque se detiene en el control del split de test y la app nunca llega a `sistema_multimodal`.
-- **Evidencia exacta:** celda 9 de `ENTREGABLE.ipynb` @ `6afab21`. Con los parquet públicos de ESCI y el código tal cual, fuera de Windows el hash da `331ee032…` en vez de `4d31950e…` y salta el `AssertionError`. Con `to_csv(..., lineterminator="\r\n")` coincide con M1.
-- **Cambio mínimo recomendado:** esa línea (propuesta C1 de esta revisión) y una corrida de punta a punta en el mismo entorno donde vivirá la app. Al desplegar conviene además cargar los modelos una sola vez y separar la preparación del índice del arranque del servicio.
+- **Evidencia exacta:** celda 9 de `ENTREGABLE.ipynb` @ `6afab21` (L292). Con los parquet públicos de ESCI y el código tal cual, fuera de Windows el hash da `331ee032…` en vez de `4d31950e…` y salta el `AssertionError`. Con `to_csv(..., lineterminator="\r\n")` coincide con M1.
+- **Cambio mínimo recomendado:** esa línea (C1) y una corrida de punta a punta en el mismo entorno donde vivirá la app. Al desplegar conviene además cargar los modelos una sola vez y separar la preparación del índice del arranque del servicio.
 - **Qué NO hace falta rehacer:** el split, el hash de M1, el catálogo ni las cifras de M4.
 - **Cómo verificar el cierre:** en el entorno de despliegue la celda (o el arranque de la app) imprime `coincide con M1: True` y una foto ensayada recorre todo el sistema hasta la respuesta.
 - **Quién lo asume:** lo decide el equipo.
 
-## P1 — Mostrar la confianza como característica: «si no estoy seguro, te pregunto»
+## P1 — Mostrar la confianza como característica: «si no estoy seguro, te pregunto» (M4-02, M4-03)
 
 - **Prioridad:** P1
 - **Qué podría ocurrir durante la demo:** alguien del público muestra una foto ambigua (un paisaje, algo borroso) y el sistema contesta «Sí, lo tenemos» con productos ajenos. Esto se reproduce hoy con generación real.
@@ -35,19 +35,21 @@ En la revisión se re-ejecutó `ver()` y el generador con los modelos reales en 
 - **Cómo verificar el cierre:** con img_10, img_11 y al menos tres fotos nuevas sin producto o ilegibles, el sistema pide aclaración o se abstiene. Con img_07 y una foto nueva nítida sigue respondiendo con fichas citadas.
 - **Quién lo asume:** lo decide el equipo.
 
-## P1 — Una demo estable y con números que la respalden
+## P1 — Una demo estable y con números que la respalden (M4-04, M4-05, M4-06)
 
 - **Prioridad:** P1
 - **Qué podría ocurrir durante la demo:** una lectura cambia entre hardware y el caso estrella falla en vivo; o se cita un número que no corresponde a la versión mostrada.
 - **Evidencia exacta:**
   - En otro hardware, la variante M4.1 en bf16 descartó un iPhone nítido (img_02) como «no se aprecia en la imagen»; no ocurrió en fp16 ni en su corrida.
   - Hay dos `scorecard_m4.csv` con valores distintos (la raíz de M4 y `Resultados/`).
-  - En positivos, M3 sola y M4 aciertan 1/6 cada uno; el valor medido de la foto está en no afirmar de más: de 8 a 5 afirmaciones falsas en 12 fotos.
+  - En positivos, M3 sola y M4 aciertan 1/6 cada uno; el valor medido de la foto está en no afirmar de más: de 8 a 5 afirmaciones falsas en 12 fotos. Con 12 casos, la diferencia de acierto M4 − M3 sola tiene un IC 95 % de −0,17 a +0,33.
+  - Las 12 filas del eval set siguen en `estado = borrador`; hay 10 escenas distintas (img_12 es copia de img_01 e img_11, desenfoque de img_03).
 - **Cambio mínimo recomendado:**
-  - Congelar una versión con tag y dejar un único scorecard.
+  - Congelar una versión con tag, dejar un único scorecard (C3) y marcar el eval set como final.
   - Ensayar en el hardware de la demo un set fijo: un éxito con foto (img_07 u otra foto nueva que funcione allí), el guardrail (img_10), la abstención por Rx (img_09) y una pregunta sin foto.
   - Preparar un plan B rotulado como «salida grabada».
-  - Elegir 1–3 números con su denominador: afirmaciones falsas en 12 fotos frente a la pregunta sola; 49/49 sin regresiones sin foto; segundos por consulta con foto en el hardware de la demo.
+  - Sumar 5–6 fotos nuevas de escenas distintas, tomadas por ustedes, para ensayar y para confirmar la versión elegida.
+  - Elegir 1–3 números con su denominador e intervalo (C4 lo calcula desde su CSV): afirmaciones falsas en 12 fotos frente a la pregunta sola; 49/49 sin regresiones sin foto; segundos por consulta con foto en el hardware de la demo.
   - Al desplegar, el health check, los logs y W&B (ya lo usaron en M1) pueden presentarse como «así lo operamos».
 - **Qué NO hace falta rehacer:** el harness, la vara D3 ni la tabla de delta.
 - **Cómo verificar el cierre:** el set ensayado corre tres veces seguidas igual en el entorno de la demo, y cada número dicho en voz alta está en un único archivo con su denominador.
@@ -67,7 +69,7 @@ En la revisión se re-ejecutó `ver()` y el generador con los modelos reales en 
 3. **Cómo funciona, en una frase por pieza:** ve (M4) → entiende y decide (enrutador M3) → busca (híbrida M3) → ordena con el modelo propio entrenado en ESCI (M1) → responde citando las fichas (M3).
 4. **Confianza como producto:** una foto ambigua → «No veo marca ni modelo, ¿me lo confirmas?». Un medicamento con receta → abstención. Eso es lo que hace al sistema seguro para la tienda.
 5. **Prueba de valor:** 1–3 números con su denominador, y la latencia.
-6. **Así lo operamos:** URL, health check, W&B, versión con tag.
+6. **Así lo operamos** (cuando hayan desplegado en M5): la URL, el health check, el tablero de W&B y la versión con tag.
 7. **Límites honestos y siguiente paso:**
    - Límites: catálogo histórico sin stock; VLM de 2B; 12 fotos de evaluación.
    - Siguiente paso: búsqueda de parecidos y más fotos reales de usuarios.
